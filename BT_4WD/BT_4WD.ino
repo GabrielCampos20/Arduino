@@ -1,7 +1,8 @@
 #include <SoftwareSerial.h>
+#include <AFMotor.h>
 
-int ledsFarolDianteiro[] = { 50, 51, 52, 53 };
-int ledsFarolTraseiro[] = { 44, 45, 46, 47 };
+int ledsFarolDianteiro[] = { 40, 41, 42, 43 };
+int ledsFarolTraseiro[] = { 36, 37, 38, 39 };
 
 const int pinoTX = 53;
 const int pinoRX = 52;
@@ -9,30 +10,32 @@ int dadoBluetooth = 0;
 
 SoftwareSerial bluetooth(pinoTX, pinoRX);
 
-int IN1 = 5;
-int IN2 = 6;
-int velocidadeD = 7;
+AF_DCMotor motorDT(1);
+AF_DCMotor motorDF(2);
+AF_DCMotor motorEF(3);
+AF_DCMotor motorET(4);
 
-int IN3 = 9;
-int IN4 = 10;
-int velocidadeE = 8;
-
-int velMax = 255;
-int velStp = 0;
+const int pinoLDR = A10;
 
 void setup() {
   Serial.begin(9600);
+
   bluetooth.begin(9600);
   bluetooth.print("$");
   bluetooth.print("$");
   bluetooth.print("$");
   delay(100);
-  pinMode(velocidadeD, OUTPUT);
-  pinMode(velocidadeE, OUTPUT);
-  pinMode(IN1, OUTPUT);
-  pinMode(IN2, OUTPUT);
-  pinMode(IN3, OUTPUT);
-  pinMode(IN4, OUTPUT);
+
+  motorDT.setSpeed(255);
+  motorDF.setSpeed(255);
+  motorEF.setSpeed(255);
+  motorET.setSpeed(255);
+
+  motorDT.run(RELEASE);
+  motorDF.run(RELEASE);
+  motorEF.run(RELEASE);
+  motorET.run(RELEASE);
+
   for (int i = 0; i < 4; i++) {
     pinMode(ledsFarolDianteiro[i], OUTPUT);
   }
@@ -40,9 +43,12 @@ void setup() {
   for (int i = 0; i < 4; i++) {
     pinMode(ledsFarolTraseiro[i], OUTPUT);
   }
+
+  pinMode(pinoLDR, INPUT);
 }
 
 void loop() {
+  Serial.println(analogRead(pinoLDR));
   if (bluetooth.available()) {
     dadoBluetooth = bluetooth.read();
     Serial.println(dadoBluetooth);
@@ -62,9 +68,6 @@ void loop() {
     } else if (dadoBluetooth == 83) {
       stop();
       Serial.println("Stop");
-    } else if (dadoBluetooth == 73) {
-      forwRigh();
-      Serial.println("Forward and Right");
     } else if (dadoBluetooth == 87) {
       turnLedsFrontOn();
       Serial.println("Front leds on");
@@ -77,8 +80,6 @@ void loop() {
     } else if (dadoBluetooth == 117) {
       turnLedsBackOff();
       Serial.println("Back leds off");
-    } else {
-      Serial.println("Comando ainda não cadastrado");
     }
   } else {
     stop();
@@ -86,58 +87,34 @@ void loop() {
 }
 
 void forward() {
-  digitalWrite(IN1, 1);
-  digitalWrite(IN2, 0);
-  analogWrite(velocidadeD, velMax);
-
-  digitalWrite(IN3, 1);
-  digitalWrite(IN4, 0);
-  analogWrite(velocidadeE, velMax);
+  motorDT.run(FORWARD);
+  motorDF.run(FORWARD);
+  motorEF.run(FORWARD);
+  motorET.run(FORWARD);
 }
-
 void backward() {
-  digitalWrite(IN1, 0);
-  digitalWrite(IN2, 1);
-  analogWrite(velocidadeD, velMax);
-
-  digitalWrite(IN3, 0);
-  digitalWrite(IN4, 1);
-  analogWrite(velocidadeE, velMax);
+  motorDT.run(BACKWARD);
+  motorDF.run(BACKWARD);
+  motorEF.run(BACKWARD);
+  motorET.run(BACKWARD);
 }
-
 void right() {
-  digitalWrite(IN1, 0);
-  digitalWrite(IN2, 1);
-  analogWrite(velocidadeD, velMax);
-
-  digitalWrite(IN3, 1);
-  digitalWrite(IN4, 0);
-  analogWrite(velocidadeE, velMax);
+  motorEF.run(FORWARD);
+  motorDF.run(BACKWARD);
+  motorDT.run(BACKWARD);
+  motorET.run(FORWARD);
 }
-
 void left() {
-  digitalWrite(IN1, 1);
-  digitalWrite(IN2, 0);
-  analogWrite(velocidadeD, velMax);
-
-  digitalWrite(IN3, 0);
-  digitalWrite(IN4, 1);
-  analogWrite(velocidadeE, velMax);
+  motorEF.run(BACKWARD);
+  motorDF.run(FORWARD);
+  motorDT.run(FORWARD);
+  motorET.run(BACKWARD);
 }
-
 void stop() {
-  digitalWrite(IN1, 0);
-  digitalWrite(IN2, 0);
-  analogWrite(velocidadeD, velStp);
-
-  digitalWrite(IN3, 0);
-  digitalWrite(IN4, 0);
-  analogWrite(velocidadeE, velStp);
-}
-
-void forwRigh() {
-  forward();
-  right();
+  motorDT.run(RELEASE);
+  motorDF.run(RELEASE);
+  motorEF.run(RELEASE);
+  motorET.run(RELEASE);
 }
 
 void turnLedsFrontOn() {
