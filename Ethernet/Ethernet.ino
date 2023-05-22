@@ -70,7 +70,7 @@ void loop() {
           client.println("<h1><center>CONTROLE SALA</center></h1>");
 
 
-          
+
           if (statusSala == 1) {
             client.println("<center><form method=get name=LEDSALA><input type=hidden name=ledSala value=0 /><input type=submit value=APAGAR></form></center>");
           } else {

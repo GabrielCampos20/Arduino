@@ -15,6 +15,8 @@ AF_DCMotor motorDF(2);
 AF_DCMotor motorEF(3);
 AF_DCMotor motorET(4);
 
+int speed = 255;
+
 const int pinoLDR = A10;
 
 void setup() {
@@ -26,10 +28,10 @@ void setup() {
   bluetooth.print("$");
   delay(100);
 
-  motorDT.setSpeed(255);
-  motorDF.setSpeed(255);
-  motorEF.setSpeed(255);
-  motorET.setSpeed(255);
+  motorDT.setSpeed(speed);
+  motorDF.setSpeed(speed);
+  motorEF.setSpeed(speed);
+  motorET.setSpeed(speed);
 
   motorDT.run(RELEASE);
   motorDF.run(RELEASE);
@@ -48,7 +50,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.println(analogRead(pinoLDR));
   if (bluetooth.available()) {
     dadoBluetooth = bluetooth.read();
     Serial.println(dadoBluetooth);
@@ -81,10 +82,9 @@ void loop() {
       turnLedsBackOff();
       Serial.println("Back leds off");
     }
-  } else {
-    stop();
   }
 }
+
 
 void forward() {
   motorDT.run(FORWARD);
