@@ -19,7 +19,7 @@ int sensorD = 3;
 Variáveis de controle de velocidade
 A velocidade pode ir de 0 a 255
 */
-int velocidade = 255;
+int velocidade = 120;
 int parar = 0;
 
 void setup() {
@@ -35,24 +35,24 @@ void setup() {
 }
 
 void loop() {
-  if (digitalRead(sensorE) == 1 && digitalRead(sensorD) == 1) {
+  if (digitalRead(sensorE) == 0 && digitalRead(sensorD) == 0) {
     forward();
     /*
     Se nenhum dos sensores identificar nada, o carrinho vai pra frente
     */
-  } else if (digitalRead(sensorE) == 0 && digitalRead(sensorD) == 1) {
+  } else if (digitalRead(sensorE) == 1 && digitalRead(sensorD) == 0) {
     right();
     /*
     Se o sensor da esquerda identificar algo, e o sensor da direita não
     identificar nada, o carrinho vira pra direita
     */
-  } else if (digitalRead(sensorE) == 1 && digitalRead(sensorD) == 0) {
+  } else if (digitalRead(sensorE) == 0 && digitalRead(sensorD) == 1) {
     left();
     /*
     Se o sensor da direita identificar algo, e o sensor da esquerda não
     identificar nada, o carrinho vira pra esquerda
     */
-  } else if (digitalRead(sensorE) == 0 && digitalRead(sensorD) == 0) {
+  } else if (digitalRead(sensorE) == 1 && digitalRead(sensorD) == 1) {
     stop();
     /*
     Se ambos os sensores identificarem algo, o carrinho para
@@ -69,7 +69,7 @@ Esquerda;
 Direita;
 Parar;
 */
-void forward() {
+void backward() {
   digitalWrite(IN1, 1);
   digitalWrite(IN2, 0);
   analogWrite(velocidadeD, velocidade);
@@ -79,7 +79,7 @@ void forward() {
   analogWrite(velocidadeE, velocidade);
 }
 
-void backward() {
+void forward() {
   digitalWrite(IN1, 0);
   digitalWrite(IN2, 1);
   analogWrite(velocidadeD, velocidade);
@@ -89,7 +89,7 @@ void backward() {
   analogWrite(velocidadeE, velocidade);
 }
 
-void left() {
+void right() {
   digitalWrite(IN1, 0);
   digitalWrite(IN2, 1);
   analogWrite(velocidadeD, velocidade);
@@ -99,7 +99,7 @@ void left() {
   analogWrite(velocidadeE, velocidade);
 }
 
-void right() {
+void left() {
   digitalWrite(IN1, 1);
   digitalWrite(IN2, 0);
   analogWrite(velocidadeD, velocidade);

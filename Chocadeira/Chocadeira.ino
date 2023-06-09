@@ -19,34 +19,9 @@ void setup() {
 void loop() {
   sensors.requestTemperatures();
   temp = sensors.getTempCByIndex(0);
-  /*if (temp <= 500) {
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Temperatura: ");
-    lcd.setCursor(0, 1);
-    lcd.print(String(temp) + "C");
-    Serial.println(temp);
-    digitalWrite(lamp, LOW);
-    Serial.println("OFF");
-
-  } else {
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("Temperatura: ");
-    lcd.setCursor(0, 1);
-    lcd.print(String(temp) + "C");
-    Serial.println(temp);
-    digitalWrite(lamp, HIGH);
-    Serial.println("ON");
-  }*/
-
-  digitalWrite(lamp, HIGH);
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Temperatura: ");
-  lcd.setCursor(0, 1);
-  lcd.print(String(temp) + "C");
   Serial.println(temp);
   digitalWrite(lamp, HIGH);
-  Serial.println("ON");
+  delay(5000);
+  digitalWrite(lamp, LOW);
+  delay(5000);
 }

@@ -1,7 +1,6 @@
 //Inclusão da biblioteca que controla os motores
 #include <AFMotor.h>
 
-
 //Definição dos pinos que vão controlar os motores
 AF_DCMotor motorDT(1);
 AF_DCMotor motorDF(2);
