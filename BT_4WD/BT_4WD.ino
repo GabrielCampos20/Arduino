@@ -61,10 +61,10 @@ void loop() {
       backward();
       Serial.println("Backward");
     } else if (dadoBluetooth == 82) {
-      right();
+      left();
       Serial.println("Right");
     } else if (dadoBluetooth == 76) {
-      left();
+      right();
       Serial.println("Left");
     } else if (dadoBluetooth == 83) {
       stop();
