@@ -1,5 +1,5 @@
-int trigger = 9;
-int echo = 10;
+int trigger = 29;
+int echo = 28;
 
 int cm = 0;
 int pontos = 0;

@@ -22,26 +22,13 @@ void setup() {
 }
 
 void loop() {
-  // /1 == preto || 0 == branco/
-  int valSensorE = digitalRead(sensorE);
-  int valSensorD = digitalRead(sensorD);
-  int valSensorM = digitalRead(sensorM);
-
-  if (valSensorE == 0 && valSensorM == 1 && valSensorD == 0) {
-    forward();
-  }
-  if (valSensorE == 1 && valSensorD == 0) {
-    while (valSensorM == 0) {
-      valSensorM = digitalRead(sensorM);
-      left();
-    }
-  }
-  if (valSensorE == 0 && valSensorD == 1) {
-    while (valSensorM == 0) {
-      valSensorM = digitalRead(sensorM);
-      right();
-    }
-  }
+  Serial.print("Sensor E: ");
+  Serial.println(digitalRead(sensorE));
+  Serial.print("Sensor M: ");
+  Serial.println(digitalRead(sensorM));
+  Serial.print("Sensor D: ");
+  Serial.println(digitalRead(sensorD));
+  delay(1000);
 }
 
 
