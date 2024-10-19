@@ -2,7 +2,7 @@
 #include <dht11.h>
 
 dht11 DHT11;
-#define DHT11PIN 4
+#define DHT11PIN 19
 
 void setup() {
   Serial.begin(9600);

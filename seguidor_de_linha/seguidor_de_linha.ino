@@ -27,21 +27,22 @@ void loop() {
   int valSensorD = digitalRead(sensorD);
   int valSensorM = digitalRead(sensorM);
 
-  if (valSensorE == 0 && valSensorM == 1 && valSensorD == 0) {
-    forward();
-  }
-  if (valSensorE == 1 && valSensorD == 0) {
-    while (valSensorM == 0) {
-      valSensorM = digitalRead(sensorM);
-      left();
-    }
-  }
-  if (valSensorE == 0 && valSensorD == 1) {
-    while (valSensorM == 0) {
-      valSensorM = digitalRead(sensorM);
-      right();
-    }
-  }
+  // if (valSensorE == 0 && valSensorM == 1 && valSensorD == 0) {
+  //   forward();
+  // }
+  // if (valSensorE == 1 && valSensorD == 0) {
+  //   while (valSensorM == 0) {
+  //     valSensorM = digitalRead(sensorM);
+  //     left();
+  //   }
+  // }
+  // if (valSensorE == 0 && valSensorD == 1) {
+  //   while (valSensorM == 0) {
+  //     valSensorM = digitalRead(sensorM);
+  //     right();
+  //   }
+  // }
+  forward();
 }
 
 
